@@ -20,8 +20,8 @@ export const color = {
   text: '#353535',
 }
 
-export const designWidth = 1024
-export const designHeight = 768
+// export const designWidth = 1024
+// export const designHeight = 768
 
-// export const designWidth = 375
-// export const designHeight = 667
+export const designWidth = 375
+export const designHeight = 667

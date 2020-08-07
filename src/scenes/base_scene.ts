@@ -4,11 +4,6 @@
 import $ from '../service/http'
 import AssetsLoader from '../service/assets_loader'
 
-import Graphics = Phaser.GameObjects.Graphics
-import Image = Phaser.GameObjects.Image
-import Text = Phaser.GameObjects.Text
-import Container = Phaser.GameObjects.Container
-
 import { designWidth, designHeight, resolution } from '../shared/constants'
 const designRatio = designWidth / designHeight
 
