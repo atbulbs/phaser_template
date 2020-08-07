@@ -18,6 +18,7 @@ export const fontFamily = {
 
 export const color = {
   text: '#353535',
+  theme: '#FF6422'
 }
 
 // export const designWidth = 1024

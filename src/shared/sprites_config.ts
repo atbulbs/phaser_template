@@ -11,7 +11,7 @@ function url (fileName) {
 }
 
 const spritesConfig = {
-
+  'soundPlayAnimas': url('sound_sprite.json'),
 }
 
 export default spritesConfig

@@ -13,9 +13,13 @@ console.warn('screenWidth', screenWidth)
 console.warn('screenHeight', screenHeight)
 
 // 是否过渡入场
-let isTransitionIn = true
+let isTransitionIn = false
 // 是否过渡出场
 let isTransitionOut = false
+// 是否渐变出场
+let isFadeOut = false
+// 是否渐现入场
+let isFadeIn = false
 
 export default class BaseScene extends Phaser.Scene {
 
@@ -132,20 +136,51 @@ export default class BaseScene extends Phaser.Scene {
    * @description 初始化导航
    */
   private initNavigator () {
+
     this.events.on('transitionstart', (fromScene, duration) => {
       // console.warn('transitionstart')
-      if (isTransitionIn) {
+      if (isFadeIn) {
+        this.tweens.add({
+          targets: this.cameras.main,
+          alpha: {
+            from: 0,
+            to: 1,
+          },
+          duration: 500,
+          onCompleteScope: this,
+          onComplete: () => {
+
+          }
+        })
+      } else if (isTransitionIn) {
         this.cameras.main.x = screenWidth * resolution
         this.tweens.add({
           targets: this.cameras.main,
           x: 0,
           y: 0,
           duration: 500,
+          onCompleteScope: this,
+          onComplete: () => {
+
+          }
         })
       }
+
+
     })
+
     this.events.on('transitionout', (toScene, duration) => {
-      if (isTransitionOut) {
+      this.dispose()
+      if (isFadeOut) {
+        this.tweens.add({
+          targets: this.cameras.main,
+          duration: 500,
+          onCompleteScope: this,
+          onComplete: () => {
+
+          }
+        })
+      } else if (isTransitionOut) {
         this.tweens.add({
           targets: this.cameras.main,
           x: screenWidth * resolution,
@@ -153,7 +188,6 @@ export default class BaseScene extends Phaser.Scene {
           duration: 500,
           onCompleteScope: this,
           onComplete: () => {
-            this.dispose()
           }
         })
       }
@@ -165,16 +199,18 @@ export default class BaseScene extends Phaser.Scene {
      */
     this.navigator.push = (nextSceneName, data = {}) => {
       window.__current_scene_name__ = nextSceneName
-      console.warn('push nextSceneName', nextSceneName)
-      isTransitionIn = data.isNextSceneTransitionIn ?? true
-      isTransitionOut = data.isCurrentSceneTransitonOut ?? false
+      // console.warn('push nextSceneName', nextSceneName)
+      isTransitionIn = data.isTransitionIn ?? false
+      isTransitionOut = data.isTransitonOut ?? false
+      isFadeIn = data.isFadeIn ?? false
+      isFadeOut = data.isFadeOut ?? false
       this.scene.transition({
         // 下一个场景的key
         target: nextSceneName,
         // 是否在下面移动
         moveBelow: false,
         // 过渡时间
-        duration: 550,
+        duration: 300,
         // 传递给下一个场景的数据
         data,
       })

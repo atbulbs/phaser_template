@@ -5,6 +5,7 @@ import BaseScene from './base_scene'
 
 import { Text, TextStyle, BackgroundColor } from '../components/base'
 import { designWidth, designHeight } from '../shared/constants'
+import { Button } from '../components/common'
 
 export default class LoadScene extends BaseScene {
 
@@ -14,7 +15,13 @@ export default class LoadScene extends BaseScene {
   }
 
   build () {
-    BackgroundColor(0x85A3FF)
+    BackgroundColor(0x00ffff)
+    const { top, left } = this.background
+    Button(left + 10, top + 10, 35, 35, 'back', '').onceClick(() => {
+      this.navigator.push('LoadScene', {
+        isTransitonOut: true,
+      })
+    })
     Text('HomeScene', TextStyle({
       color: 'pink',
       fontSize: 36,
